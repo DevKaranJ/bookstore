@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function BookForm({ onAdd }) {
   const [newBook, setNewBook] = useState({ title: '', author: '' });
@@ -29,7 +30,7 @@ function BookForm({ onAdd }) {
           type="text"
           name="author"
           placeholder="Author"
-          value={newBook.author} 
+          value={newBook.author}
           onChange={handleInputChange}
         />
         <button type="submit">Add Book</button>
@@ -37,5 +38,9 @@ function BookForm({ onAdd }) {
     </div>
   );
 }
+
+BookForm.propTypes = {
+  onAdd: PropTypes.func.isRequired,
+};
 
 export default BookForm;
