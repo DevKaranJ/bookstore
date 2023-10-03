@@ -11,19 +11,19 @@ function getNextItemId() {
 const initialState = {
   books: [
     {
-      item_id: 'getNextItemId()',
+      item_id: getNextItemId(),
       title: 'The Great Gatsby',
       author: 'John Smith',
       category: 'Fiction',
     },
     {
-      item_id: 'getNextItemId()',
+      item_id: getNextItemId(),
       title: 'Anna Karenina',
       author: 'Leo Tolstoy',
       category: 'Fiction',
     },
     {
-      item_id: 'getNextItemId()',
+      item_id: getNextItemId(),
       title: 'The Selfish Gene',
       author: 'Richard Dawkins',
       category: 'Nonfiction',
