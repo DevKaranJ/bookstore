@@ -24,6 +24,8 @@ const Books = () => {
             {' '}
             {book.author}
             {' '}
+            {book.category}
+            {' '}
             <button type="button" onClick={() => handleRemoveBook(book.item_id)}>
               Remove
             </button>
