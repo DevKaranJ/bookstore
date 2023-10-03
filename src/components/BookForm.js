@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addBook } from '../redux/books/booksSlice';
 
-function BookForm({ onAdd }) {
+const BookForm = () => {
+  const dispatch = useDispatch();
   const [newBook, setNewBook] = useState({ title: '', author: '' });
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewBook({ ...newBook, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAdd(newBook);
-    setNewBook({ title: '', author: '' });
+  const handleAddBook = () => {
+    if (isFormValid) {
+      dispatch(addBook(newBook));
+      setNewBook({ title: '', author: '' });
+    }
   };
+
+  // Validate the form
+  const validateForm = () => {
+    setIsFormValid(newBook.title !== '' && newBook.author !== '');
+  };
+
+  React.useEffect(() => {
+    validateForm();
+  }, [newBook]);
 
   return (
     <div>
       <h2>Add a New Book</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <input
           type="text"
           name="title"
@@ -33,14 +46,12 @@ function BookForm({ onAdd }) {
           value={newBook.author}
           onChange={handleInputChange}
         />
-        <button type="submit">Add Book</button>
+        <button type="button" onClick={handleAddBook} disabled={!isFormValid}>
+          Add Book
+        </button>
       </form>
     </div>
   );
-}
-
-BookForm.propTypes = {
-  onAdd: PropTypes.func.isRequired,
 };
 
 export default BookForm;
