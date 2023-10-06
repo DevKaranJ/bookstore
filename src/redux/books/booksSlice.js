@@ -1,19 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API_BASE_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi';
+const API_KEY = 'ErF3GluEp9ZnqOaca0a7';
+
 const initialState = {
   books: [],
   status: '',
   error: null,
 };
 
-const API_BASE_URL = 'https://us-central1-bookstore-api-e63c8.cloudfunctions.net/bookstoreApi';
-const API_KEY = 'ErF3GluEp9ZnqOaca0a7';
-
 export const fetchBooksAsync = createAsyncThunk('books/fetchBooks', async () => {
-  const response = await
-  axios.get(`${API_BASE_URL}/apps/${API_KEY}/books`);
-  console.log(response.data);
+  const response = await axios.get(`${API_BASE_URL}/apps/${API_KEY}/books`);
   return response.data;
 });
 
@@ -27,31 +25,32 @@ export const removeBookAsync = createAsyncThunk('books/removeBook', async ({ ite
   return item_id;
 });
 
+const normalizeBooks = (books) => {
+  const keys = Object.keys(books);
+  return keys.map((x) => ({ item_id: x, ...books[x][0] }));
+};
+
+const updateBooks = (state, books) => {
+  state.books = books;
+  if (state.books.length === 0) state.error = 'No result was found!';
+};
+
 const booksSlice = createSlice({
   name: 'books',
   initialState,
-  reducers: {
-
-  },
-
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooksAsync.fulfilled, (state, action) => {
         if (action.payload !== '') {
-          const books = [];
-          const keys = Object.keys(action.payload);
-          keys.forEach((x) => {
-            books.push({ item_id: x, ...action.payload[x][0] });
-          });
-
-          state.books = books;
-          if (state.books.length === 0) state.error = 'No result was found!';
+          const books = normalizeBooks(action.payload);
+          updateBooks(state, books);
         } else {
           state.error = 'No result was found!';
         }
       })
       .addCase(addBookAsync.fulfilled, (state, action) => {
-        state.books = [...state.books, action.payload];
+        updateBooks(state, [...state.books, action.payload]);
       })
       .addCase(removeBookAsync.fulfilled, (state, action) => {
         state.status = 'Done';
