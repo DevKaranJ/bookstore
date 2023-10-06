@@ -19,14 +19,17 @@ const BookForm = () => {
     }
   };
 
-  // Validate the form
-  const validateForm = () => {
-    setIsFormValid(newBook.title !== '' && newBook.author !== '' && newBook.category !== '');
-  };
-
   useEffect(() => {
-    validateForm();
-  }, [newBook, validateForm]);
+    // Validate the form
+    const validateForm = () => {
+      setIsFormValid(newBook.title !== '' && newBook.author !== '' && newBook.category !== '');
+    };
+
+    validateForm(); // Call the validation function here
+
+    // Since the validation function doesn't have any external dependencies,
+    // there's no need to include it in the dependency array of useEffect.
+  }, [newBook]);
 
   return (
     <div>
