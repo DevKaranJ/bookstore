@@ -4,17 +4,9 @@ import { Link } from 'react-router-dom';
 function Navigation() {
   return (
     <nav>
-      <div>
-        Bookstore CMS
-      </div>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/categories">Categories</Link>
-        </li>
-      </ul>
+      <h1>Bookstore CMS</h1>
+      <Link to="/">Books</Link>
+      <Link to="/categories">Categories</Link>
     </nav>
   );
 }

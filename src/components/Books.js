@@ -1,39 +1,34 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeBook } from '../redux/books/booksSlice';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchBooksAsync } from '../redux/books/booksSlice';
+import BookList from './BookList';
 import BookForm from './BookForm';
 
-const Books = () => {
+function Books() {
   const dispatch = useDispatch();
-  const books = useSelector((state) => state.books.books); // Assuming your state structure
+  const app_id = 'ErF3GluEp9ZnqOaca0a7';
+  const books = useSelector((state) => state.books.books);
+  const status = useSelector((state) => state.books.status);
 
-  const handleRemoveBook = (itemId) => {
-    dispatch(removeBook(itemId));
-  };
+  useEffect(() => {
+    dispatch(fetchBooksAsync(app_id));
+  }, [dispatch]);
 
   return (
     <div>
-      <h1>Books</h1>
+      <p>{status}</p>
+      {books.map((book) => (
+        <div key={book.id}>
+          {' '}
+          {
+
+        }
+          <BookList book={book} />
+        </div>
+      ))}
       <BookForm />
-      <ul>
-        {books.map((book) => (
-          <li key={book.item_id}>
-            {book.title}
-            {' '}
-            by
-            {' '}
-            {book.author}
-            {' '}
-            {book.category}
-            {' '}
-            <button type="button" onClick={() => handleRemoveBook(book.item_id)}>
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
-};
+}
 
 export default Books;

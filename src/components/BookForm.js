@@ -1,64 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addBook } from '../redux/books/booksSlice';
+import { v4 as uuidv4 } from 'uuid';
+import { addBookAsync } from '../redux/books/booksSlice';
 
-const BookForm = () => {
+function BookForm() {
   const dispatch = useDispatch();
-  const [newBook, setNewBook] = useState({ title: '', author: '', category: '' });
-  const [isFormValid, setIsFormValid] = useState(false);
+  const app_id = 'ErF3GluEp9ZnqOaca0a7';
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('Fiction');
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewBook({ ...newBook, [name]: value });
+  const categories = ['Fiction', 'Non-Fiction', 'Science Fiction', 'Mystery', 'Fantasy', 'Romance']; // Define your categories here
+
+  const handleAddBook = async () => {
+    console.log('Adding book...');
+    const newBook = {
+      item_id: uuidv4(),
+      title,
+      author,
+      category,
+    };
+    console.log('New Book:', newBook);
+    await dispatch(addBookAsync({ app_id, book: newBook }));
+    console.log('Book added successfully');
+    setTitle('');
+    setAuthor('');
   };
-
-  const handleAddBook = () => {
-    if (isFormValid) {
-      dispatch(addBook(newBook));
-      setNewBook({ title: '', author: '', category: '' });
-    }
-  };
-
-  // Validate the form
-  const validateForm = () => {
-    setIsFormValid(newBook.title !== '' && newBook.author !== '' && newBook.category !== '');
-  };
-
-  useEffect(() => {
-    validateForm();
-  }, [newBook, validateForm]);
 
   return (
     <div>
-      <h2>Add a New Book</h2>
-      <form>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={newBook.title}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="author"
-          placeholder="Author"
-          value={newBook.author}
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={newBook.category}
-          onChange={handleInputChange}
-        />
-        <button type="button" onClick={handleAddBook} disabled={!isFormValid}>
-          Add Book
-        </button>
-      </form>
+      <h2>Add New Book</h2>
+      <input
+        type="text"
+        placeholder="Title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Author"
+        value={author}
+        onChange={(e) => setAuthor(e.target.value)}
+      />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
+      <button type="button" onClick={handleAddBook}>
+        Add Book
+      </button>
     </div>
   );
-};
+}
 
 export default BookForm;

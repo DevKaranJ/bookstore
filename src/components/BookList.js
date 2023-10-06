@@ -1,20 +1,49 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import Book from './Books';
+import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { removeBookAsync } from '../redux/books/booksSlice';
 
-const BookList = () => {
-  const books = useSelector((state) => state.books.books);
+function BookList({ book }) {
+  const dispatch = useDispatch();
+
+  const handleRemoveBook = async () => {
+    const app_id = 'ErF3GluEp9ZnqOaca0a7';
+    await dispatch(removeBookAsync({ app_id, item_id: book.item_id }));
+  };
 
   return (
     <div>
-      <h2>Book List</h2>
-      <ul>
-        {books.map((book) => (
-          <Book key={book.item_id} book={book} />
-        ))}
-      </ul>
+      <p>
+        Title:
+        {' '}
+        {book.title}
+      </p>
+      <p>
+        Author:
+        {' '}
+        {book.author}
+      </p>
+      <p>
+        Category:
+        {' '}
+        {book.category}
+      </p>
+      <button onClick={handleRemoveBook} type="button">
+        {' '}
+        {/* Add type="button" */}
+        Remove Book
+      </button>
     </div>
   );
+}
+
+BookList.propTypes = {
+  book: PropTypes.shape({
+    item_id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default BookList;

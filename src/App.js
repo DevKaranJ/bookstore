@@ -1,20 +1,18 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BooksPage from './components/Books';
+import Categories from './components/Categories';
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import Books from './components/Books';
-import Navbar from './components/Navigation';
-import Catagories from './components/Categories';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <div className="App">
-      <>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Books />} />
-          <Route path="catagories" element={<Catagories />} />
-        </Routes>
-      </>
-    </div>
+    <Router>
+      <Navigation />
+      <Routes>
+        <Route path="/" element={<BooksPage />} />
+        <Route path="/categories" element={<Categories />} />
+      </Routes>
+    </Router>
   );
 }
 
