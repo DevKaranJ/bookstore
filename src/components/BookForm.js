@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { addBookAsync } from '../redux/books/booksSlice';
+import './styles/BookForm.css';
 
 function BookForm() {
   const dispatch = useDispatch();
@@ -29,29 +30,33 @@ function BookForm() {
 
   return (
     <div>
+      <hr style={{ borderTop: '1px solid #e8e8e8', marginTop: '40px' }} />
+
       <h2>Add New Book</h2>
-      <input
-        type="text"
-        placeholder="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Author"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-      />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
-      <button type="button" onClick={handleAddBook}>
-        Add Book
-      </button>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Author"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+        />
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+        <button className="add-book-button" type="button" onClick={handleAddBook}>
+          <span className="button-text">Add Book</span>
+        </button>
+      </div>
     </div>
   );
 }
