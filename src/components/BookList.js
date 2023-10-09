@@ -23,15 +23,15 @@ function BookList({ book }) {
   return (
     <section>
       <ul>
-        <li>
+        <li className="category-content">
           {' '}
           {book.category}
         </li>
-        <li>
+        <li className="title-content">
           {' '}
           {book.title}
         </li>
-        <li>
+        <li className="author-content">
           {' '}
           {book.author}
         </li>
