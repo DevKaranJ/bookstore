@@ -8,25 +8,25 @@ function Books() {
   const dispatch = useDispatch();
   const app_id = 'ErF3GluEp9ZnqOaca0a7';
   const books = useSelector((state) => state.books.books);
-  const status = useSelector((state) => state.books.status);
 
   useEffect(() => {
     dispatch(fetchBooksAsync(app_id));
   }, [dispatch]);
 
   return (
-    <div>
-      <p>{status}</p>
-      {books.map((book) => (
-        <div key={book.id}>
-          {' '}
-          {
+    <div className="books-container">
+      <div className="books-header">
+        {books.map((book) => (
+          <div key={book.id}>
+            {' '}
+            {
 
         }
-          <BookList book={book} />
-        </div>
-      ))}
-      <BookForm />
+            <BookList book={book} />
+          </div>
+        ))}
+        <BookForm />
+      </div>
     </div>
   );
 }
