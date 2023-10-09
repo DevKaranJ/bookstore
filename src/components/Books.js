@@ -15,16 +15,18 @@ function Books() {
 
   return (
     <div className="books-container">
-      {books.map((book) => (
-        <div key={book.id}>
-          {' '}
-          {
+      <div className="books-header">
+        {books.map((book) => (
+          <div key={book.id}>
+            {' '}
+            {
 
         }
-          <BookList book={book} />
-        </div>
-      ))}
-      <BookForm />
+            <BookList book={book} />
+          </div>
+        ))}
+        <BookForm />
+      </div>
     </div>
   );
 }

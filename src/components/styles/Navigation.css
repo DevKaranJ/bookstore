@@ -46,21 +46,20 @@ ul li a {
 }
 
 .icon-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #f5f6fa;
-    margin-left: 1rem;
-  }
-  
-  .blue-icon {
-    color: #0290ff;
-    font-size: 24px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #f5f6fa;
+  margin-left: 1rem;
+}
 
+.blue-icon {
+  color: #0290ff;
+  font-size: 24px;
+}
 
 @media screen and (min-width: 600px) {
   .nav-container {
