@@ -6,13 +6,17 @@ import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<BooksPage />} />
-        <Route path="/categories" element={<Categories />} />
-      </Routes>
-    </Router>
+    <div className="app">
+      <main className="main-container">
+        <Router>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<BooksPage />} />
+            <Route path="/categories" element={<Categories />} />
+          </Routes>
+        </Router>
+      </main>
+    </div>
   );
 }
 
